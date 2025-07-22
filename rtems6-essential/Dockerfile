@@ -13,6 +13,7 @@ ARG VS_CODE_EXT_CPPTOOLS_VERSION=1.22.10
 ARG VS_CODE_EXT_HEX_EDITOR_VERSION=1.11.1
 ARG VS_CODE_EXT_CMAKETOOLS_VERSION=1.19.52
 ARG VS_CODE_EXT_NRF_DEVICETREE_VERSION=2024.9.26
+ARG VS_CODE_EXT_CLANGD_VERSION=0.2.0
 ARG WGET_ARGS="-q --show-progress --progress=bar:force:noscroll"
 ARG TARGETARCH="amd64"
 
@@ -37,7 +38,7 @@ RUN if [ "$TARGETARCH" = "amd64" ] || [ "$TARGETARCH" = "arm64" ]; then \
 # Standard build dependencies
 RUN apt-get -y update && \
 	apt-get install -y \
-       apt-utils build-essential g++ gdb \
+       apt-utils build-essential bear g++ gdb \
        dos2unix ca-certificates file locales \
        wget curl openssh-server mc \
        vim u-boot-tools git cmake \
@@ -93,14 +94,16 @@ RUN cd /tmp && \
     fi && \
     wget ${WGET_ARGS} https://github.com/microsoft/vscode-cmake-tools/releases/download/v${VS_CODE_EXT_CMAKETOOLS_VERSION}/cmake-tools.vsix -O cmake-tools.vsix && \
     wget --compression=gzip ${WGET_ARGS} https://marketplace.visualstudio.com/_apis/public/gallery/publishers/ms-vscode/vsextensions/hexeditor/${VS_CODE_EXT_HEX_EDITOR_VERSION}/vspackage -O hexeditor.vsix && \
-    wget --compression=gzip https://marketplace.visualstudio.com/_apis/public/gallery/publishers/nordic-semiconductor/vsextensions/nrf-devicetree/${VS_CODE_EXT_NRF_DEVICETREE_VERSION}/vspackage -O nordic-semiconductor.nrf-devicetree.vsix
+    wget --compression=gzip https://marketplace.visualstudio.com/_apis/public/gallery/publishers/nordic-semiconductor/vsextensions/nrf-devicetree/${VS_CODE_EXT_NRF_DEVICETREE_VERSION}/vspackage -O nordic-semiconductor.nrf-devicetree.vsix && \
+    wget ${WGET_ARGS} https://github.com/clangd/vscode-clangd/releases/download/${VS_CODE_EXT_CLANGD_VERSION}/vscode-clangd-${VS_CODE_EXT_CLANGD_VERSION}.vsix -O clangd.vsix
 
 # Install extensions
 RUN cd /tmp && \
     code-server --install-extension cpptools.vsix && \
     code-server --install-extension cmake-tools.vsix && \
     code-server --install-extension hexeditor.vsix && \
-    code-server --install-extension nordic-semiconductor.nrf-devicetree.vsix
+    code-server --install-extension nordic-semiconductor.nrf-devicetree.vsix && \
+    code-server --install-extension clangd.vsix
 
 # Clean up
 RUN cd /tmp && \
@@ -108,7 +111,8 @@ RUN cd /tmp && \
     rm cpptools.vsix && \
     rm cmake-tools.vsix && \
     rm hexeditor.vsix && \
-    rm nordic-semiconductor.nrf-devicetree.vsix
+    rm nordic-semiconductor.nrf-devicetree.vsix && \
+    rm clangd.vsix
 
 # Copy workspace configuration
 COPY rtems.code-workspace /rtems.code-workspace
