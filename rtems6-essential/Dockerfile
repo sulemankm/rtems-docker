@@ -28,13 +28,6 @@ RUN if [ "$TARGETARCH" = "amd64" ] || [ "$TARGETARCH" = "arm64" ]; then \
         exit 1; \
     fi
 
-# Before Ubuntu 24.04, the sources.list file was used for additional sources
-# RUN sed -i '/deb-src/s/^# //' /etc/apt/sources.list && apt update
-
-# Since ubuntu 24.04, the sources.list.d directory is used for additional sources
-# RUN cp /etc/apt/sources.list.d/ubuntu.sources /etc/apt/sources.list.d/ubuntu.sources~
-# RUN sed -Ei 's/^Types: deb$/Types: deb deb-src/' /etc/apt/sources.list.d/ubuntu.sources
-
 # Standard build dependencies
 RUN apt-get -y update && \
 	apt-get install -y \
@@ -50,7 +43,7 @@ RUN apt-get -y update && \
 # Clean up stale packages
 RUN apt-get clean -y && \
 	apt-get autoremove --purge -y && \
-   rm -rf /var/lib/apt/lists/*
+    rm -rf /var/lib/apt/lists/*
 
 # Set up directories
 RUN mkdir -p /workspace/
