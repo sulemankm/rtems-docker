@@ -1,8 +1,8 @@
 # rtems-docker
-A collection of Docker files for the RTEMS RTOS tools and BSP builds
+A collection of Docker files for the RTEMS RTOS tools and BSP builds.  This fork now builds the base docker image (and hence all the derived images) on Debian `stable-20241016-slim` rather than Ubuntu.
 
 Simiar to the RTEMS repositories, the branches support different versions of RTEMS:
-- The default, or "main" branch supports the master branches of RTEMS tools and kernel source
+- The default, or "main" branch supports the master branches of RTEMS tools and kernel source.
 - The "rtems4.11" branch supports RTEMS 4.11
 - The "rtems5" branch supports the RTEMS 5 branch of the tools and RTEMS source
 
