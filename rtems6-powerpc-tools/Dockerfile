@@ -1,4 +1,4 @@
-FROM sulemankm/rtems6-essential:latest AS build
+FROM rtems6-essential:latest AS build
 LABEL Description="rtems6 PowerPC tool chain"
 ENV TERM=linux
 
