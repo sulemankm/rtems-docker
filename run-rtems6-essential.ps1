@@ -1,0 +1,1 @@
+docker run --rm -d -it -p 3333:3333 -p 2222:2222 -p 8800:8800 -v $pwd\workspace:/workspace -w /workspace rtems6-essential:latest
