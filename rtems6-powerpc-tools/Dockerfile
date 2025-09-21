@@ -12,9 +12,9 @@ RUN cd /usr/src && \
     ./source-builder/sb-check && \
     cd /usr/src/rsb/rtems && \
     ../source-builder/sb-set-builder --list-bsets && \
-    ../source-builder/sb-set-builder --prefix=${RTEMS_BASE} 6/rtems-powerpc
-    # cd /usr/src && \
-    # rm -rf rsb
+    ../source-builder/sb-set-builder --prefix=${RTEMS_BASE} 6/rtems-powerpc && \
+    cd /usr/src && \
+    rm -rf rsb
 
 # Check if gcc works
 RUN echo `${RTEMS_BASE}/bin/powerpc-rtems6-gcc --version`

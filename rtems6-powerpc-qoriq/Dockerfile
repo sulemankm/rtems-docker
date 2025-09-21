@@ -1,4 +1,4 @@
-FROM sulemankm/rtems6-powerpc-tools:latest AS build
+FROM rtems6-powerpc-tools:latest AS build
 LABEL Description="rtems6 PowerPC QorIQ & QEmuPPC bsp"
 ENV TERM=linux
 COPY config.ini /config.ini
