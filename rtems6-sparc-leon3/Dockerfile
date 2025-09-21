@@ -3,8 +3,10 @@ LABEL Description="rtems6 SPARC LEON3 bsp"
 ENV TERM linux
 COPY config.ini /config.ini
 RUN cd /usr/src && \
-    git clone --depth 1 git://git.rtems.org/rtems.git rtems && \
+    git clone --depth 1 https://gitlab.rtems.org/rtems/rtos/rtems.git rtems && \
     cd rtems && \
+    git fetch --all --tags && \
+    git checkout tags/6.1 -b 6  && \
     mv /config.ini . && \
     ./waf configure \
     --prefix=/opt/rtems6 && \
